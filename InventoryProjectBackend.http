@@ -1,0 +1,6 @@
+@InventoryProjectBackend_HostAddress = http://localhost:5234
+
+GET {{InventoryProjectBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
