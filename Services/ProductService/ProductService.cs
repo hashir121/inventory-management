@@ -44,5 +44,41 @@ namespace InventoryProjectBackend.Services.ProductService
         {
             return await _unitOfWork.ProductRepository.GetAllProductPaginated(get);
         }
+
+        public async Task<UpdateResponse> Update(UpdateProductDto update)
+        {
+            var response = new UpdateResponse();
+            var productEntity = await _unitOfWork.ProductRepository
+    .FindOneByConditionAsync(x =>
+        !x.IsDeleted &&
+        (x.Id == update.Id || x.Name.ToLower() == update.Name.ToLower())
+    );
+            if (productEntity == null)
+            {
+                response.Success = false;
+                response.Message = "Product with the ID does not exist";
+                return response;
+            }
+            if (productEntity.Name.ToLower() == update.Name.ToLower()
+    && productEntity.Id != update.Id)
+            {
+                response.Success = false;
+                response.Message = "Product with the same name already exists";
+                return response;
+            }
+
+            productEntity.Name = update.Name;
+            productEntity.Description  = update.Description;
+
+            _unitOfWork.ProductRepository.Update(productEntity);
+            await _unitOfWork.SaveChangesAsync();
+
+            response.Success = true;
+            response.Message = "Produce updated successfully";
+
+            return response;
+
+
+        }
     }
 }

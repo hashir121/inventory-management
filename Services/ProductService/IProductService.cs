@@ -8,5 +8,7 @@ namespace InventoryProjectBackend.Services.ProductService
         Task<AddResponse> AddProduct(AddProductDto add);
 
         Task<PagedList<GetPaginatedProduct>> GetAllProductPaginated(PaginatedRequest get);
+
+        Task<UpdateResponse> Update(UpdateProductDto update);
     }
 }

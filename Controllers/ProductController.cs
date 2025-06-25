@@ -15,7 +15,7 @@ namespace InventoryProjectBackend.Controllers
             _productService = productService;
         }
 
-        [HttpPost("add-product")]
+        [HttpPost("add")]
         public async Task<AddResponse> AddProduct(AddProductDto add)
         {
             return await _productService.AddProduct(add);
@@ -25,6 +25,12 @@ namespace InventoryProjectBackend.Controllers
         public async Task<PagedList<GetPaginatedProduct>> GetAllProductPaginated(PaginatedRequest get)
         {
             return await _productService.GetAllProductPaginated(get);
+        }
+
+        [HttpPut("update")]
+        public async Task<UpdateResponse> Update(UpdateProductDto update)
+        {
+            return await _productService.Update(update);
         }
     }
 }
