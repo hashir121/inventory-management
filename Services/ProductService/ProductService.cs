@@ -80,5 +80,44 @@ namespace InventoryProjectBackend.Services.ProductService
 
 
         }
+
+
+        public async Task<DeleteResponse> Delete(long productId)
+        {
+            var response = new DeleteResponse();
+
+            var existingPurchase = await _unitOfWork.PurchaseRepository.FindOneByConditionAsync(x => !x.IsDeleted && x.ProductId == productId);
+            if(existingPurchase != null)
+            {
+                response.Success = false;
+                response.Message = "Already associated with a purchase. Cannot Delete this product";
+                return response;
+            }
+            var existingSale = await _unitOfWork.SaleRepository.FindOneByConditionAsync(x => !x.IsDeleted && x.ProductId == productId);
+            if(existingSale != null)
+            {
+                response.Success = false;
+                response.Message = "Already associated with a sale. Cannot Delete this product";
+                return response;
+            }
+
+            var product = await _unitOfWork.ProductRepository.FindOneByConditionAsync(x => !x.IsDeleted && x.Id == productId);
+
+            if(product == null)
+            {
+                response.Success = false;
+                response.Message = "Product with the ID does not exist";
+                return response;
+            }
+            product.IsDeleted = true;
+            _unitOfWork.ProductRepository.Update(product);
+            await _unitOfWork.SaveChangesAsync();
+
+            response.Success = true;
+            response.Message = "Product deleted successfully";
+
+            return response;
+
+        }   
     }
 }

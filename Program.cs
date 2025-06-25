@@ -36,6 +36,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 #region
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+builder.Services.AddScoped<ISaleRepository, SaleRepository>();
+
+
 
 #endregion
 

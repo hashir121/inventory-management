@@ -32,5 +32,11 @@ namespace InventoryProjectBackend.Controllers
         {
             return await _productService.Update(update);
         }
+
+        [HttpDelete("delete/{productId}")]
+        public async Task<DeleteResponse> Delete(long productId)
+        {
+            return await _productService.Delete(productId);
+        }
     }
 }

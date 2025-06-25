@@ -10,5 +10,6 @@ namespace InventoryProjectBackend.Services.ProductService
         Task<PagedList<GetPaginatedProduct>> GetAllProductPaginated(PaginatedRequest get);
 
         Task<UpdateResponse> Update(UpdateProductDto update);
+        Task<DeleteResponse> Delete(long productId);
     }
 }
