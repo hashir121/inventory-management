@@ -1,6 +1,7 @@
 ﻿using InventoryProjectBackend.Entities;
 using InventoryProjectBackend.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace InventoryProjectBackend.Repositories
 {
@@ -27,7 +28,21 @@ namespace InventoryProjectBackend.Repositories
             _dbContext.Entry(entity).State = EntityState.Modified;
         }
 
-        
+        public async Task<IEnumerable<TEntity>> FindByConditionAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _entities
+                .AsNoTracking()
+                .Where(predicate)
+                .ToListAsync();
+        }
+
+        public async Task<TEntity?> FindOneByConditionAsync(Expression<Func<TEntity, bool>> predicate)
+        {
+            return await _entities
+                .AsNoTracking()
+                .FirstOrDefaultAsync(predicate);
+        }
+
 
     }
 }

@@ -6,5 +6,7 @@ namespace InventoryProjectBackend.Services.ProductService
     public interface IProductService
     {
         Task<AddResponse> AddProduct(AddProductDto add);
+
+        Task<PagedList<GetPaginatedProduct>> GetAllProductPaginated(PaginatedRequest get);
     }
 }

@@ -20,5 +20,11 @@ namespace InventoryProjectBackend.Controllers
         {
             return await _productService.AddProduct(add);
         }
+
+        [HttpPost("get-all")]
+        public async Task<PagedList<GetPaginatedProduct>> GetAllProductPaginated(PaginatedRequest get)
+        {
+            return await _productService.GetAllProductPaginated(get);
+        }
     }
 }

@@ -18,7 +18,13 @@ namespace InventoryProjectBackend.Services.ProductService
         public async Task<AddResponse> AddProduct(AddProductDto add)
         {
             var response = new AddResponse("Product");
-
+            var existingProduct = await _unitOfWork.ProductRepository.FindOneByConditionAsync(x => !x.IsDeleted && (x.Name ?? "").ToLower() == (add.Name ?? "").ToLower());
+            if (existingProduct != null)
+            {
+                response.Success = false;
+                response.Message = "Product with the same name already exists";
+                return response;
+            }
             Product product = new Product();
             product.Name = add.Name;
             product.Description = add.Description;
@@ -31,6 +37,12 @@ namespace InventoryProjectBackend.Services.ProductService
 
 
             return response;
+        }
+
+
+        public async Task<PagedList<GetPaginatedProduct>> GetAllProductPaginated(PaginatedRequest get)
+        {
+            return await _unitOfWork.ProductRepository.GetAllProductPaginated(get);
         }
     }
 }
