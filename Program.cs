@@ -2,6 +2,7 @@ using InventoryProjectBackend.Entities;
 using InventoryProjectBackend.Interfaces;
 using InventoryProjectBackend.Repositories;
 using InventoryProjectBackend.Services.ProductService;
+using InventoryProjectBackend.Services.PurchaseService;
 using InventoryProjectBackend.UOW;
 using Microsoft.EntityFrameworkCore;
 
@@ -46,6 +47,7 @@ builder.Services.AddScoped<ISaleRepository, SaleRepository>();
 
 #region
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IPurchaseService, PurchaseService>();
 #endregion
 
 
