@@ -38,7 +38,7 @@ namespace InventoryProjectBackend.Utility
 
             switch(sortDirection)
             {
-                case "Asc":
+                case "asc":
                     query = query.OrderBy<T, object>(sortExpression);
                     break;
                 default:

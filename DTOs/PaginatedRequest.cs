@@ -6,6 +6,6 @@
         public int PageSize { get; set; } = 15;       
         public string? SearchText { get; set; }
         public string SortBy { get; set; } = "createdDate";          
-        public string SortDirection { get; set; } = "Desc";  
+        public string SortDirection { get; set; } = "desc";  
     }
 }
